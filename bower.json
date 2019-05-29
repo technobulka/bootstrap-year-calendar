@@ -1,5 +1,5 @@
 {
-  "name": "bootstrap-year-calendar",
+  "name": "technobulka/bootstrap-year-calendar",
   "main": [
     "css/bootstrap-year-calendar.css",
     "js/bootstrap-year-calendar.js"
