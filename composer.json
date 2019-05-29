@@ -1,0 +1,16 @@
+{
+    "name": "technobulka/bootstrap-year-calendar",
+    "description": "A fully customizable year calendar widget, for boostrap !",
+    "keywords": [
+        "calendar",
+        "bootstrap"
+    ],
+    "type": "library",
+    "license": "Apache-2.0",
+    "homepage": "https://github.com/Paul-DS/bootstrap-year-calendar",
+    "authors": [
+        {
+            "name": "Paul-DS"
+        }
+    ]
+}
