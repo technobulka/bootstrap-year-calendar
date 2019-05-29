@@ -1,5 +1,5 @@
 {
-  "name": "bootstrap-year-calendar",
+  "name": "technobulka/bootstrap-year-calendar",
   "version": "1.1.1",
   "description": "A fully customizable year calendar widget, for boostrap !",
   "main": "./js/bootstrap-year-calendar.js",
