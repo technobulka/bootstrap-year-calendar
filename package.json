@@ -6,10 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/technobulka/bootstrap-year-calendar.git"
-  },
+  "repository": "https://github.com/technobulka/bootstrap-year-calendar",
   "keywords": [
     "calendar",
     "bootstrap"
