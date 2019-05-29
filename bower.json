@@ -4,6 +4,10 @@
     "css/bootstrap-year-calendar.css",
     "js/bootstrap-year-calendar.js"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/technobulka/bootstrap-year-calendar.git"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "bootstrap": ">=3.1.1",
