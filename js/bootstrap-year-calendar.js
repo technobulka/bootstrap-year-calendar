@@ -45,6 +45,7 @@
 				displayHeader: opt.displayHeader != null ? opt.displayHeader : true,
 				alwaysHalfDay: opt.alwaysHalfDay != null ? opt.alwaysHalfDay : false,
 				enableRangeSelection: opt.enableRangeSelection != null ? opt.enableRangeSelection : false,
+				enableRangeClick: opt.enableRangeClick != null ? opt.enableRangeClick : false,
 				disabledDays: opt.disabledDays instanceof Array ? opt.disabledDays : [],
 				disabledWeekDays: opt.disabledWeekDays instanceof Array ? opt.disabledWeekDays : [],
 				hiddenWeekDays: opt.hiddenWeekDays instanceof Array ? opt.hiddenWeekDays : [],
@@ -480,7 +481,7 @@
 			var cells = this.element.find('.day:not(.old, .new, .disabled)');
 			
 			/* Click on date */
-			cells.click(function(e) {
+			cells.on('click touchend', function(e) {
 				e.stopPropagation();
 				var date = _this._getDate($(this));
 				_this._triggerEvent('clickDay', {
@@ -584,6 +585,59 @@
 							endDate: maxDate,
 							events: _this.getEventsOnRange(minDate, new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate() + 1))
 						});
+					}
+				});
+			}
+
+			/* Range click */
+			if (this.options.enableRangeClick) {
+				cells.on('click touchend', function () {
+					var currentDate = _this._getDate($(this));
+
+					if (!_this._mouseDown) {
+						if(_this.options.allowOverlap || _this.getEvents(currentDate).length == 0) {
+							_this._mouseDown = true;
+							_this._rangeStart = _this._rangeEnd = currentDate;
+							_this._refreshRange();
+						}
+					} else {
+						if (!_this.options.allowOverlap) {
+							var newDate = new Date(_this._rangeStart.getTime()),
+								nextDate = new Date(_this._rangeStart.getTime());
+
+							if(newDate < currentDate) {
+								nextDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate() + 1);
+								while (newDate < currentDate) {
+									if (_this.getEvents(nextDate).length > 0) {
+										break;
+									}
+
+									newDate.setDate(newDate.getDate() + 1);
+									nextDate.setDate(nextDate.getDate() + 1);
+								}
+							} else {
+								nextDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate() - 1);
+								while (newDate > currentDate) {
+									if(_this.getEvents(nextDate).length > 0) {
+										break;
+									}
+
+									newDate.setDate(newDate.getDate() - 1);
+									nextDate.setDate(nextDate.getDate() - 1);
+								}
+							}
+
+							currentDate = newDate;
+						}
+
+						_this._rangeEnd = currentDate;
+						_this._mouseDown = false;
+						_this._refreshRange();
+
+						var minDate = _this._rangeStart < _this._rangeEnd ? _this._rangeStart : _this._rangeEnd;
+						var maxDate = _this._rangeEnd > _this._rangeStart ? _this._rangeEnd : _this._rangeStart;
+
+						_this._triggerEvent('clickRange', { startDate: minDate, endDate: maxDate });
 					}
 				});
 			}
@@ -1085,6 +1139,7 @@
 	$.fn.clickDay = function(fct) { $(this).bind('clickDay', fct); }
 	$.fn.dayContextMenu = function(fct) { $(this).bind('dayContextMenu', fct); }
 	$.fn.selectRange = function(fct) { $(this).bind('selectRange', fct); }
+	$.fn.clickRange = function(fct) { $(this).bind('clickRange', fct); }
 	$.fn.mouseOnDay = function(fct) { $(this).bind('mouseOnDay', fct); }
 	$.fn.mouseOutDay = function(fct) { $(this).bind('mouseOutDay', fct); }
 	
