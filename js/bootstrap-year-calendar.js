@@ -481,7 +481,7 @@
 			var cells = this.element.find('.day:not(.old, .new, .disabled)');
 			
 			/* Click on date */
-			cells.on('click touchend', function(e) {
+			cells.on(this._isMobile ? 'touchend' : 'click', function(e) {
 				e.stopPropagation();
 				var date = _this._getDate($(this));
 				_this._triggerEvent('clickDay', {
@@ -591,7 +591,7 @@
 
 			/* Range click */
 			if (this.options.enableRangeClick) {
-				cells.on('click touchend', function () {
+				cells.on(this._isMobile ? 'touchend' : 'click', function () {
 					var currentDate = _this._getDate($(this));
 
 					if (!_this._mouseDown) {
@@ -870,6 +870,10 @@
 			}
 			
 			return false;
+		},
+		_isMobile: function() {
+			var mobileRE = /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series[46]0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino|android|ipad|playbook|silk/i;
+			return mobileRE.test(navigator.userAgent);
 		},
 		getWeekNumber: function(date) {
 			var tempDate = new Date(date.getTime());
