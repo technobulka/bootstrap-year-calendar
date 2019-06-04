@@ -481,7 +481,7 @@
 			var cells = this.element.find('.day:not(.old, .new, .disabled)');
 			
 			/* Click on date */
-			cells.on(this._isMobile ? 'touchend' : 'click', function(e) {
+			cells.on(this._isMobile() ? 'touchend' : 'click', function(e) {
 				e.stopPropagation();
 				var date = _this._getDate($(this));
 				_this._triggerEvent('clickDay', {
@@ -591,7 +591,7 @@
 
 			/* Range click */
 			if (this.options.enableRangeClick) {
-				cells.on(this._isMobile ? 'touchend' : 'click', function () {
+				cells.on(this._isMobile() ? 'touchend' : 'click', function () {
 					var currentDate = _this._getDate($(this));
 
 					if (!_this._mouseDown) {
